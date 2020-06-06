@@ -161,15 +161,15 @@ esac
 if [ -z ${TEST_MODE} ]; then
 	case "$INSTALL_MODE" in
 	"img")
-		echo "I: Pushing rootfs and android image to /data via ADB"
+		echo " _ "
 		if ! time flash_img; then
-			echo "Error: Couldn't copy the files to the device, is it connected?"
+			echo " _ "
 		fi
 		;;
 	"dir")
-		echo "I: Pushing rootfs and android image to /data via ADB"
+		echo " _ "
 		if ! flash_dir; then
-			echo "Error: Couldn't copy the files to the device, is it connected?"
+			echo " _ "
 		fi
 		;;
 	esac

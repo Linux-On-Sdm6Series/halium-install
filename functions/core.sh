@@ -49,49 +49,61 @@ function unmount() {
 }
 
 function flash_img() {
+	mkdir -p out
 	if $DO_ZIP ; then
-		echo "I:    Compressing rootfs on host"
-		pigz --fast "$IMAGE_DIR/rootfs.img"
-		echo "I:    Pushing rootfs to /data via ADB"
-		adb push "$IMAGE_DIR/rootfs.img.gz" /data/
-		echo "I:    Decompressing rootfs on device"
-		adb shell "gunzip -f /data/rootfs.img.gz"
+		echo "Repack Rootfs						"
+		pigz --fast "$IMAGE_DIR/rootfs.img					"
+		echo "Move Rootfs To Host				"
 
-		echo "I:    Compressing android image on host"
-		pigz --fast "$IMAGE_DIR/system.img"
-		echo "I:    Pushing android image to /data via ADB"
-		adb push "$IMAGE_DIR/system.img.gz" /data/
-		echo "I:    Decompressing android image on device"
-		adb shell "gunzip -f /data/system.img.gz"
+		echo "Repack System						"
+		pigz --fast "$IMAGE_DIR/system.img					"
+		echo "Move System To Host				"
+		mv "$IMAGE_DIR/"*.img.gz out/
+		mv out/*.img.gz flashable-sar/data/
 	else
-		echo "I:    Pushing rootfs to /data via ADB"
-		adb push "$IMAGE_DIR/rootfs.img" /data/
-		echo "I:    Pushing android image to /data via ADB"
-		adb push "$IMAGE_DIR/system.img" /data/
+		echo "Move Rootfs To Out				"
+		echo "Move System To Out				"
+		mv "$IMAGE_DIR/"*.img out/
+		mv out/*.img flashable-sar/data/
+#		echo "Download Vendor With Google Drive						"
+#		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt" -O flashable-legacy/data/vendor.img && rm -rf /tmp/cookies.txt
+#		echo "Create Flashable Zip 					"
+#		cd flashable-legacy
+#		zip -rv9 UbPorts-16.04-Legacy-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
+#		cd ..
+		rm -rf flashable-legacy/data/*.img
+		rm -rf out
 	fi
 
 	if $SYSTEM_AS_ROOT; then
-		echo "I:    Renaming to system-as-root compatible system image"
-		adb shell "mv /data/system.img /data/android-rootfs.img"
+		echo "Rename Android Legacy Rootfs To System-As-Root Rootfs		"
+		mv flashable-sar/data/system.img flashable-sar/data/android-rootfs.img
+		echo "Download Vendor With Google Drive						"
+		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt" -O flashable-sar/data/vendor.img && rm -rf /tmp/cookies.txt
+		cd flashable-sar
+		echo "Create Flashable Zip"
+		zip -rv9 UbPorts-16.04-SAR-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
+		cd ..
+		rm -rf flashable-sar/data/*.img
+		rm -rf out
 	fi
 }
 
 function flash_dir() {
-	adb push "$ROOTFS_DIR"/* /data/halium-rootfs/
+	echo "Done							"
 }
 
-function clean() {
-	sudo rm "$ROOTFS_DIR" "$IMAGE_DIR" -rf
-}
+# function clean() {
+# 	echo "Done								"
+# }
 
-function clean_device() {
-	# Make sure the device is in a clean state
-	adb shell sync
-}
+# function clean_device() {
+# 	echo "Done						"
+# }
 
 function clean_exit() {
-	echo "I: Cleaning up"
+#	echo "Done							"
 	unmount || true
-	clean || true
-	clean_device || true
+# 	clean || true
+#	clean_device || true
 }
