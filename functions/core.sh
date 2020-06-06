@@ -71,8 +71,6 @@ function flash_img() {
 #		cd flashable-legacy
 #		zip -rv9 UbPorts-16.04-Legacy-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
 #		cd ..
-		rm -rf flashable-legacy/data/*.img
-		rm -rf out
 	fi
 
 	if $SYSTEM_AS_ROOT; then
