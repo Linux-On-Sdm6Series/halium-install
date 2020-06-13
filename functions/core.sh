@@ -66,7 +66,7 @@ function flash_img() {
 		mv "$IMAGE_DIR/"*.img out/
 		mv out/*.img flashable-sar/data/
 #		echo "Download Vendor With Google Drive						"
-#		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt" -O flashable-legacy/data/vendor.img && rm -rf /tmp/cookies.txt
+#		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1jUs5qo6Op06iglOafE4ifizZGdpci2b0' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1jUs5qo6Op06iglOafE4ifizZGdpci2b0" -O flashable-legacy/data/vendor.img && rm -rf /tmp/cookies.txt
 #		echo "Create Flashable Zip 					"
 #		cd flashable-legacy
 #		zip -rv9 UbPorts-16.04-Legacy-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
