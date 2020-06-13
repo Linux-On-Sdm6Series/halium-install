@@ -77,7 +77,7 @@ function flash_img() {
 		echo "Rename Android Legacy Rootfs To System-As-Root Rootfs		"
 		mv flashable-sar/data/system.img flashable-sar/data/android-rootfs.img
 		echo "Download Vendor With Google Drive						"
-		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1DTesz7zqbH_CuzM_PIMlEns75iB8lagt" -O flashable-sar/data/vendor.img && rm -rf /tmp/cookies.txt
+		wget https://github.com/Linux-On-Whyred/vendor_halium_whyred/releases/download/Miui/vendor.img
 		cd flashable-sar
 		echo "Create Flashable Zip"
 		zip -rv9 UbPorts-16.04-SAR-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
