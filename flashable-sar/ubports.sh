@@ -30,6 +30,8 @@ rm -rf /data/linux/Rootfs/etc/rc.local;
 #----------------------------------------------------------------------------------------------
 mv -f /data/ubports/data/rootfs-mount/etc/init/mount-android.conf /data/linux/Rootfs/etc/init/;
 mv -f /data/ubports/data/rootfs-mount/etc/rc.local /data/linux/Rootfs/etc/;
+#------------------------------
+mkdir -p /data/linux/System/efs;
 #--------------------------------------------------------------------------
 chmod 0644 /data/linux/Rootfs/etc/init/mount-android.conf;
 chmod 0755 /data/linux/Rootfs/etc/rc.local;
