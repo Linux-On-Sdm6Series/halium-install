@@ -77,7 +77,7 @@ function flash_img() {
 		echo "Rename Android Legacy Rootfs To System-As-Root Rootfs		"
 		mv flashable-sar/data/system.img flashable-sar/data/android-rootfs.img
 		echo "Download Vendor With Google Drive						"
-		wget https://github.com/Linux-On-Whyred/vendor_halium_whyred/releases/download/Miui/vendor.img
+		wget https://github.com/Linux-On-Whyred/vendor_halium_whyred/releases/download/Miui/vendor.img -O flashable-sar/data/vendor.img
 		cd flashable-sar
 		echo "Create Flashable Zip"
 		zip -rv9 UbPorts-16.04-SAR-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
