@@ -59,12 +59,12 @@ function flash_img() {
 		pigz --fast "$IMAGE_DIR/system.img					"
 		echo "Move System To Host				"
 		mv "$IMAGE_DIR/"*.img.gz out/
-		mv out/*.img.gz flashable-sar/data/
+		mv out/*.img.gz flashable/data/
 	else
 		echo "Move Rootfs To Out				"
 		echo "Move System To Out				"
 		mv "$IMAGE_DIR/"*.img out/
-		mv out/*.img flashable-sar/data/
+		mv out/*.img flashable/data/
 #		echo "Download Vendor With Google Drive						"
 #		wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1jUs5qo6Op06iglOafE4ifizZGdpci2b0' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1jUs5qo6Op06iglOafE4ifizZGdpci2b0" -O flashable-legacy/data/vendor.img && rm -rf /tmp/cookies.txt
 #		echo "Create Flashable Zip 					"
@@ -75,14 +75,15 @@ function flash_img() {
 
 	if $SYSTEM_AS_ROOT; then
 		echo "Rename Android Legacy Rootfs To System-As-Root Rootfs		"
-		mv flashable-sar/data/system.img flashable-sar/data/android-rootfs.img
+		mv flashable/data/system.img flashable/data/android-rootfs.img
 		echo "Download Vendor With Google Drive						"
-		wget https://github.com/Linux-On-Whyred/vendor_halium_whyred/releases/download/16-06/vendor.img -O flashable-sar/data/vendor.img
-		cd flashable-sar
+		wget https://github.com/Linux-On-Whyred/vendor_halium_whyred/releases/download/16-06/vendor.img -O flashable/data/vendor.img
+		cd flashable
 		echo "Create Flashable Zip"
 		zip -rv9 UbPorts-16.04-SAR-whyred-$(date +"%m""%d"-"%H""%M").zip ubports.sh tools data META-INF
+		mv UbPorts-16.04-SAR-whyred-*.zip ../
 		cd ..
-		rm -rf flashable-sar/data/*.img
+		rm -rf flashable/data/*.img
 		rm -rf out
 	fi
 }
